@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Tabela titulo="Rascunhos" :emails="emails" :carregando="carregando" />
+    <Tabela titulo="Favoritos" :emails="emails" :carregando="carregando" />
   </div>
 </template>
 

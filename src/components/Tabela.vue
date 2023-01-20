@@ -99,12 +99,21 @@
             </td>
 
             <td @click="abrirEmail(email)">
-              {{ email.endereco }}
+              <span>{{ email.endereco }}</span>
+              <div v-if="isMobile">
+                <span>
+                  {{ email.assunto }}
+                </span>
+                <br />
+                <span>
+                  {{ new Date(email.data * 1000).toLocaleDateString() }}
+                </span>
+              </div>
             </td>
-            <td @click="abrirEmail(email)">
+            <td @click="abrirEmail(email)" v-if="!isMobile">
               {{ email.assunto }}
             </td>
-            <td @click="abrirEmail(email)">
+            <td @click="abrirEmail(email)" v-if="!isMobile">
               {{ new Date(email.data * 1000).toLocaleDateString() }}
             </td>
             <td v-if="!isMobile">
