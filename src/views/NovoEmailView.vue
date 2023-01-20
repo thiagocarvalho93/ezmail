@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card height="465px">
+    <v-card class="ma-2" height="465px">
       <v-card-title>Novo email</v-card-title>
       <v-card-subtitle>
         <v-text-field
@@ -46,6 +46,8 @@ export default {
     return {
       email: new Email(),
       texto: "",
+      destinatario: "",
+      assunto: "",
       emailRules: [
         (v) => !!v || "Campo obrigatório",
         (v) => /.+@.+\..+/.test(v) || "E-mail inválido",
@@ -53,9 +55,7 @@ export default {
     };
   },
 
-  async beforeMount() {
-    await this.obterEmail();
-  },
+  async beforeMount() {},
 
   methods: {},
 };

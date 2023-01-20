@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <v-card>
+  <v-card class="ma-2">
     <v-card-title class="py-2">
       <span>{{ titulo }}</span>
 
@@ -22,22 +22,23 @@
     </v-card-title>
     <v-data-table
       height="350px"
-      :single-select="singleSelect"
       item-key="id"
-      show-select
       :loading="carregando || loading"
       :headers="headers"
       :items="emails"
       :search="search"
       sort-by="data"
       dense
+      :header-props="{
+        sortByText: 'Ordenar por',
+      }"
       :footer-props="{
         'items-per-page-options': [10, 25, 50, 100],
         'items-per-page-text': 'Itens por página',
       }"
       :items-per-page="30"
     >
-      <template v-slot:body="{ items, isSelected, select }">
+      <template v-slot:body="{ items }">
         <tbody>
           <tr
             :class="
@@ -46,7 +47,7 @@
             v-for="email in items"
             :key="email.id"
           >
-            <td>
+            <!-- <td v-if="!isMobile">
               <v-checkbox
                 :input-value="isSelected(email)"
                 style="margin: 0px; padding: 0px"
@@ -55,9 +56,9 @@
                 @click="select(email, !isSelected(email))"
               >
               </v-checkbox>
-            </td>
+            </td> -->
 
-            <td>
+            <td v-if="!isMobile">
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -106,7 +107,7 @@
             <td @click="abrirEmail(email)">
               {{ new Date(email.data * 1000).toLocaleDateString() }}
             </td>
-            <td>
+            <td v-if="!isMobile">
               <v-tooltip left>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -157,6 +158,13 @@ export default {
     titulo: { type: String, require: true },
     carregando: { type: Boolean, require: true },
   },
+
+  computed: {
+    isMobile() {
+      return this.$vuetify.breakpoint.xsOnly;
+    },
+  },
+
   data() {
     return {
       search: "",

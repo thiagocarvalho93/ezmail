@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card height="465px">
+    <v-card class="ma-2" height="465px">
       <v-card-actions>
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">

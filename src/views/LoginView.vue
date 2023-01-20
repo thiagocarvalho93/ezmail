@@ -1,39 +1,44 @@
 <template>
   <div class="container">
-    <div class="card">
-      <h1 class="title">EZMail</h1>
+    <v-card>
+      <v-card-title>
+        <span>EZMail</span>
+      </v-card-title>
+      <v-card-text>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="Email"
+            single-line
+            outlined
+            required
+          ></v-text-field>
 
-      <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="Email"
-          single-line
-          filled
-          required
-        ></v-text-field>
+          <v-text-field
+            v-model="password"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="passwordRules"
+            label="Password"
+            single-line
+            :type="showPassword ? 'text' : 'password'"
+            @click:append="showPassword = !showPassword"
+            outlined
+            required
+          ></v-text-field>
 
-        <v-text-field
-          v-model="password"
-          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          :rules="passwordRules"
-          label="Password"
-          single-line
-          :type="showPassword ? 'text' : 'password'"
-          @click:append="showPassword = !showPassword"
-          filled
-          required
-        ></v-text-field>
+          <v-checkbox
+            v-model="rememberPassword"
+            class="pa-0 ma-0"
+            label="Lembrar-me"
+            color="primary"
+            value="red"
+            hide-details
+          ></v-checkbox>
+        </v-form>
+      </v-card-text>
 
-        <v-checkbox
-          v-model="rememberPassword"
-          class="pa-0 ma-0"
-          label="Lembrar-me"
-          color="primary"
-          value="red"
-          hide-details
-        ></v-checkbox>
-
+      <v-card-actions class="d-flex justify-center align-center">
         <v-btn
           color="primary"
           class="btn-login"
@@ -42,8 +47,8 @@
         >
           Login
         </v-btn>
-      </v-form>
-    </div>
+      </v-card-actions>
+    </v-card>
   </div>
 </template>
 
@@ -115,14 +120,7 @@ export default {
     rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
 }
 
-.title {
-  font-size: 50px;
-  margin-bottom: 50px;
-  font-weight: 400;
-}
-
 .btn-login {
-  margin-top: 30px;
   text-align: center;
 }
 </style>

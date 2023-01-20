@@ -3,15 +3,18 @@
   <div>
     <v-navigation-drawer
       app
+      bottom
       clipped
       width="200"
+      v-model="drawer"
       :mini-variant.sync="mini"
-      permanent
       expand-on-hover
       color="blue"
+      v-if="!isMobile"
+      nav
       dark
     >
-      <v-list dense>
+      <v-list nav dense>
         <div v-for="(rota, i) in rotas" :key="i">
           <v-list-item :to="rota.path" :key="i" link>
             <v-list-item-icon>
@@ -25,7 +28,35 @@
         </div>
       </v-list>
     </v-navigation-drawer>
+
+    <v-navigation-drawer
+      app
+      bottom
+      clipped
+      width="200"
+      v-model="drawer"
+      color="blue"
+      v-if="isMobile"
+      nav
+      dark
+    >
+      <v-list nav dense>
+        <div v-for="(rota, i) in rotas" :key="i">
+          <v-list-item :to="rota.path" :key="i" link>
+            <v-list-item-icon>
+              <v-icon>{{ rota.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>{{ rota.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- <v-divider class="ma-0 pa-0"></v-divider> -->
+        </div>
+      </v-list>
+    </v-navigation-drawer>
+
     <v-app-bar color="blue" dark app clipped-left outlined>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
       <v-toolbar-title>EZmail</v-toolbar-title>
@@ -85,6 +116,11 @@ export default {
       email: "john.doe@ezmail.com",
     },
   }),
+  computed: {
+    isMobile() {
+      return this.$vuetify.breakpoint.xsOnly;
+    },
+  },
   watch: {
     group() {
       this.drawer = false;
