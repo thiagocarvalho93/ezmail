@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./routes";
-// import storageUtil from "@/utils/storage-util";
 
 Vue.use(VueRouter);
 
@@ -14,7 +13,11 @@ router.beforeEach((to, from, next) => {
     if (localStorage.getItem("token") == null) {
       next({ name: "Login" });
       return;
-    } else next();
+    } else if (routes.some((rota) => rota.name == to.name)) {
+      next();
+    } else {
+      next({ name: "CaixaEntrada" });
+    }
   } else next();
 });
 
