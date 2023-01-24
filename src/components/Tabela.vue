@@ -20,7 +20,10 @@
         hide-details
       ></v-text-field>
     </v-card-title>
+
+    <!-- Tabela desktop -->
     <v-data-table
+      v-if="!isMobile"
       height="350px"
       item-key="id"
       :loading="carregando || loading"
@@ -28,6 +31,7 @@
       :items="emails"
       :search="search"
       sort-by="data"
+      :sort-desc="true"
       dense
       :header-props="{
         sortByText: 'Ordenar por',
@@ -47,18 +51,7 @@
             v-for="email in items"
             :key="email.id"
           >
-            <!-- <td v-if="!isMobile">
-              <v-checkbox
-                :input-value="isSelected(email)"
-                style="margin: 0px; padding: 0px"
-                color="info"
-                hide-details
-                @click="select(email, !isSelected(email))"
-              >
-              </v-checkbox>
-            </td> -->
-
-            <td v-if="!isMobile">
+            <td>
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -99,24 +92,19 @@
             </td>
 
             <td @click="abrirEmail(email)">
+              <v-avatar class="mr-2" size="30">
+                <img v-if="!!email.avatar" alt="Avatar" :src="email.avatar" />
+                <v-icon size="30" v-else :color="blue">mdi-account</v-icon>
+              </v-avatar>
               <span>{{ email.endereco }}</span>
-              <div v-if="isMobile">
-                <span>
-                  {{ email.assunto }}
-                </span>
-                <br />
-                <span>
-                  {{ new Date(email.data * 1000).toLocaleDateString() }}
-                </span>
-              </div>
             </td>
-            <td @click="abrirEmail(email)" v-if="!isMobile">
+            <td @click="abrirEmail(email)">
               {{ email.assunto }}
             </td>
-            <td @click="abrirEmail(email)" v-if="!isMobile">
+            <td @click="abrirEmail(email)">
               {{ new Date(email.data * 1000).toLocaleDateString() }}
             </td>
-            <td v-if="!isMobile">
+            <td>
               <v-tooltip left>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -155,6 +143,53 @@
         </tbody>
       </template>
     </v-data-table>
+
+    <v-data-table
+      v-if="isMobile"
+      height="350px"
+      item-key="id"
+      :loading="carregando || loading"
+      :headers="headersMobile"
+      :items="emails"
+      :search="search"
+      sort-by="data"
+      :sort-desc="true"
+      dense
+      hide-default-header
+      :footer-props="{
+        'items-per-page-options': [10, 25, 50, 100],
+        'items-per-page-text': 'Itens por página',
+      }"
+      :items-per-page="30"
+    >
+      <template v-slot:[`item.endereco`]="{ item }">
+        <div
+          :class="!item.lido && item.recebido && 'email nao-lido'"
+          @click="abrirEmail(item)"
+        >
+          <v-avatar @click="abrirEmail(item)" size="30" class="mr-3">
+            <img :src="item.avatar" alt="John" />
+          </v-avatar>
+          <span>{{ item.endereco }}</span>
+        </div>
+      </template>
+      <template v-slot:[`item.assunto`]="{ item }">
+        <div
+          :class="!item.lido && item.recebido && 'email nao-lido'"
+          @click="abrirEmail(item)"
+        >
+          <span>{{ item.assunto }}</span>
+        </div>
+      </template>
+      <template v-slot:[`item.data`]="{ item }">
+        <div
+          :class="!item.lido && item.recebido && 'email nao-lido'"
+          @click="abrirEmail(item)"
+        >
+          <span>{{ new Date(item.data * 1000).toLocaleString() }}</span>
+        </div>
+      </template>
+    </v-data-table>
   </v-card>
 </template>
 
@@ -180,6 +215,20 @@ export default {
       selected: [],
       loading: false,
       singleSelect: false,
+      headersMobile: [
+        {
+          text:
+            this.titulo == "Enviados" || this.titulo == "Rascunhos"
+              ? "Para"
+              : "De",
+          align: "start",
+          value: "endereco",
+          width: "350px",
+          sortable: false,
+        },
+        { text: "Assunto", value: "assunto", sortable: false },
+        { text: "Data", value: "data", width: "100px" },
+      ],
       headers: [
         {
           text: "Marcações",
@@ -196,7 +245,7 @@ export default {
               : "De",
           align: "start",
           value: "endereco",
-          width: "200px",
+          width: "350px",
           sortable: false,
         },
         { text: "Assunto", value: "assunto", sortable: false },

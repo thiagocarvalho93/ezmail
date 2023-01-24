@@ -12,6 +12,7 @@ export default class Email {
     this.recebido = obj.recebido || false;
     this.lixeira = obj.lixeira || false;
     this.rascunho = obj.rascunho || false;
+    this.avatar = obj.avatar || "";
   }
   converterTimestampParaData = () => {
     this.data = new Date(this.data).toLocaleDateString();

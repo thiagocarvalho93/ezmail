@@ -106,7 +106,7 @@
             ).toLocaleString()}`
           }}
         </v-card-subtitle>
-        <v-card-text>
+        <v-card-text class="corpo-email">
           {{ email.corpoEmail }}
         </v-card-text>
       </div>
@@ -196,4 +196,8 @@ export default {
 </script>
   
   <style lang="scss" scoped>
+.corpo-email {
+  max-height: 280px;
+  overflow: auto;
+}
 </style>
