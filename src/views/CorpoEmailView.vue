@@ -116,7 +116,7 @@
         <v-card-subtitle>
           <v-avatar class="mr-2" size="30">
             <img v-if="!!email.avatar" alt="Avatar" :src="email.avatar" />
-            <v-icon size="30" v-else :color="blue">mdi-account</v-icon>
+            <v-icon size="30" v-else color="blue">mdi-account</v-icon>
           </v-avatar>
           {{ email.endereco }}
           <br />

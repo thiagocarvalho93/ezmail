@@ -112,7 +112,7 @@
               <td @click="abrirEmail(email)">
                 <v-avatar class="mr-2" size="30">
                   <img v-if="!!email.avatar" alt="Avatar" :src="email.avatar" />
-                  <v-icon size="30" v-else :color="blue">mdi-account</v-icon>
+                  <v-icon size="30" v-else color="blue">mdi-account</v-icon>
                 </v-avatar>
                 <span>{{ email.endereco }}</span>
               </td>
@@ -185,8 +185,9 @@
             :class="!item.lido && item.recebido && 'font-weight-bold'"
             @click="abrirEmail(item)"
           >
-            <v-avatar @click="abrirEmail(item)" size="30" class="mr-3">
-              <img :src="item.avatar" alt="John" />
+            <v-avatar class="mr-2" size="30">
+              <img v-if="!!item.avatar" alt="Avatar" :src="item.avatar" />
+              <v-icon size="30" v-else color="blue">mdi-account</v-icon>
             </v-avatar>
             <span>{{ item.endereco }}</span>
           </div>

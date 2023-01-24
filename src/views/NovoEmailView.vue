@@ -14,7 +14,9 @@
     </v-snackbar>
 
     <v-card class="ma-2" height="465px">
-      <v-card-title>Novo email</v-card-title>
+      <v-card-title class="py-3">
+        <span>Novo email</span>
+      </v-card-title>
       <v-card-text>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field

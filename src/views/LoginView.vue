@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <v-card class="pa-2">
+    <v-card class="pa-5">
       <v-card-title>
         <span>EZmail</span>
       </v-card-title>
@@ -10,8 +10,8 @@
             v-model="email"
             :rules="emailRules"
             label="Email"
+            :loading="loading"
             single-line
-            outlined
             required
           ></v-text-field>
 
@@ -20,10 +20,10 @@
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="passwordRules"
             label="Password"
+            :loading="loading"
             single-line
             :type="showPassword ? 'text' : 'password'"
             @click:append="showPassword = !showPassword"
-            outlined
             required
           ></v-text-field>
 
