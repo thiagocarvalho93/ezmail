@@ -46,7 +46,9 @@
         <tbody>
           <tr
             :class="
-              email.lido || !email.recebido ? 'email lido' : 'email nao-lido'
+              email.lido || !email.recebido
+                ? 'email lido'
+                : 'email font-weight-bold'
             "
             v-for="email in items"
             :key="email.id"
@@ -164,7 +166,7 @@
     >
       <template v-slot:[`item.endereco`]="{ item }">
         <div
-          :class="!item.lido && item.recebido && 'email nao-lido'"
+          :class="!item.lido && item.recebido && 'font-weight-bold'"
           @click="abrirEmail(item)"
         >
           <v-avatar @click="abrirEmail(item)" size="30" class="mr-3">
@@ -175,7 +177,7 @@
       </template>
       <template v-slot:[`item.assunto`]="{ item }">
         <div
-          :class="!item.lido && item.recebido && 'email nao-lido'"
+          :class="!item.lido && item.recebido && 'font-weight-bold'"
           @click="abrirEmail(item)"
         >
           <span>{{ item.assunto }}</span>
@@ -183,7 +185,7 @@
       </template>
       <template v-slot:[`item.data`]="{ item }">
         <div
-          :class="!item.lido && item.recebido && 'email nao-lido'"
+          :class="!item.lido && item.recebido && 'font-weight-bold'"
           @click="abrirEmail(item)"
         >
           <span>{{ new Date(item.data * 1000).toLocaleString() }}</span>
@@ -304,10 +306,6 @@ export default {
 .email:hover {
   box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
     rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
-}
-
-.nao-lido {
-  font-weight: bold;
 }
 
 .lido {
