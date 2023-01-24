@@ -1,7 +1,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
-    <v-snackbar v-model="snackbar" :timeout="snackbarTimeout">
+    <v-snackbar
+      transition="scale-transition"
+      v-model="snackbar"
+      :timeout="snackbarTimeout"
+    >
       {{ textoSnackbar }}
       <template v-slot:action="{ attrs }">
         <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
@@ -9,6 +13,7 @@
         </v-btn>
       </template>
     </v-snackbar>
+
     <v-card class="ma-2">
       <v-card-title class="py-2">
         <span>{{ titulo }}</span>

@@ -1,6 +1,11 @@
 <template>
   <v-app id="app">
-    <Toolbar v-if="this.$router.currentRoute.name != 'Login'"></Toolbar>
+    <Toolbar
+      v-if="
+        this.$router.currentRoute.name != 'Login' &&
+        !!this.$router.currentRoute.name
+      "
+    ></Toolbar>
     <v-main class="container">
       <div>
         <router-view />

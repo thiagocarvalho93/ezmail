@@ -1,6 +1,10 @@
 <template>
   <div>
-    <v-snackbar v-model="snackbar" :timeout="snackbarTimeout">
+    <v-snackbar
+      transition="scale-transition"
+      v-model="snackbar"
+      :timeout="snackbarTimeout"
+    >
       {{ textoSnackbar }}
       <template v-slot:action="{ attrs }">
         <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
@@ -8,6 +12,7 @@
         </v-btn>
       </template>
     </v-snackbar>
+
     <v-card class="ma-2" height="465px">
       <v-card-title>Novo email</v-card-title>
       <v-card-text>

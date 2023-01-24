@@ -1,6 +1,10 @@
 <template>
   <div>
-    <v-snackbar v-model="snackbar" :timeout="snackbarTimeout">
+    <v-snackbar
+      transition="scale-transition"
+      v-model="snackbar"
+      :timeout="snackbarTimeout"
+    >
       {{ textoSnackbar }}
       <template v-slot:action="{ attrs }">
         <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">

@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <v-card>
+    <v-card class="pa-2">
       <v-card-title>
-        <span>EZMail</span>
+        <span>EZmail</span>
       </v-card-title>
       <v-card-text>
         <v-form ref="form" v-model="valid" lazy-validation>

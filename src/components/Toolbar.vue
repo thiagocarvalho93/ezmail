@@ -67,7 +67,13 @@
         <v-icon>mdi-cog</v-icon>
       </v-btn>
 
-      <v-menu bottom min-width="200px" rounded offset-y>
+      <v-menu
+        transition="scroll-y-transition"
+        bottom
+        min-width="200px"
+        rounded
+        offset-y
+      >
         <template v-slot:activator="{ on }">
           <v-btn icon x-large v-on="on">
             <v-avatar size="32">
