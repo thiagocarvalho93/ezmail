@@ -1,5 +1,13 @@
 <template>
   <div>
+    <v-snackbar v-model="snackbar" :timeout="snackbarTimeout">
+      {{ textoSnackbar }}
+      <template v-slot:action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+          Fechar
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-card class="ma-2" height="465px">
       <v-card-actions>
         <v-tooltip top>
@@ -68,6 +76,7 @@
               icon
               v-bind="attrs"
               v-on="on"
+              :disabled="email.lixeira"
               @click="mandarParaLixeira"
             >
               <v-icon color="blue">mdi-delete-outline</v-icon>
@@ -84,6 +93,7 @@
               icon
               v-bind="attrs"
               v-on="on"
+              :disabled="!email.lido"
               @click="marcarNaoLido"
             >
               <v-icon color="blue">mdi-email-outline</v-icon>
@@ -100,11 +110,13 @@
           {{ email.assunto }}
         </v-card-title>
         <v-card-subtitle>
-          {{
-            `De: ${email.endereco}\nEnviada em: ${new Date(
-              email.data * 1000
-            ).toLocaleString()}`
-          }}
+          <v-avatar class="mr-2" size="30">
+            <img v-if="!!email.avatar" alt="Avatar" :src="email.avatar" />
+            <v-icon size="30" v-else :color="blue">mdi-account</v-icon>
+          </v-avatar>
+          {{ email.endereco }}
+          <br />
+          {{ new Date(email.data * 1000).toLocaleString() }}
         </v-card-subtitle>
         <v-card-text class="corpo-email">
           {{ email.corpoEmail }}
@@ -126,6 +138,9 @@ import rotas from "@/router/routes";
 export default {
   data() {
     return {
+      snackbar: false,
+      textoSnackbar: "",
+      snackbarTimeout: 5000,
       email: new Email(),
       routeName: "",
       loading: true,
@@ -167,6 +182,11 @@ export default {
       });
       this.loading = false;
       this.email.favorito = !this.email.favorito;
+
+      this.textoSnackbar = this.email.favorito
+        ? "Marcado como favorito"
+        : "Desmarcado como favorito";
+      this.snackbar = true;
     },
 
     async marcarImportante() {
@@ -176,6 +196,11 @@ export default {
       });
       this.loading = false;
       this.email.importante = !this.email.importante;
+
+      this.textoSnackbar = this.email.importante
+        ? "Marcado como importante"
+        : "Desmarcado como importante";
+      this.snackbar = true;
     },
 
     async mandarParaLixeira() {
@@ -183,6 +208,9 @@ export default {
       await emailApi.atualizar(this.email.id, { lixeira: true });
       this.loading = false;
       this.email.lixeira = !this.email.lixeira;
+
+      this.textoSnackbar = "Enviado para a lixeira";
+      this.snackbar = true;
     },
 
     async marcarNaoLido() {
@@ -190,6 +218,9 @@ export default {
       await emailApi.atualizar(this.email.id, { lido: !this.email.lido });
       this.loading = false;
       this.email.lido = !this.email.lido;
+
+      this.textoSnackbar = "Marcado como não lido";
+      this.snackbar = true;
     },
   },
 };

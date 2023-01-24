@@ -1,198 +1,210 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <v-card class="ma-2">
-    <v-card-title class="py-2">
-      <span>{{ titulo }}</span>
+  <div>
+    <v-snackbar v-model="snackbar" :timeout="snackbarTimeout">
+      {{ textoSnackbar }}
+      <template v-slot:action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+          Fechar
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-card class="ma-2">
+      <v-card-title class="py-2">
+        <span>{{ titulo }}</span>
 
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Pesquisar"
-        outlined
+        <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Pesquisar"
+          outlined
+          dense
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+
+      <!-- Tabela desktop -->
+      <v-data-table
+        v-if="!isMobile"
+        height="350px"
+        item-key="id"
+        :loading="carregando || loading"
+        :headers="headers"
+        :items="emails"
+        :search="search"
+        sort-by="data"
+        :sort-desc="true"
         dense
-        single-line
-        hide-details
-      ></v-text-field>
-    </v-card-title>
+        :header-props="{
+          sortByText: 'Ordenar por',
+        }"
+        :footer-props="{
+          'items-per-page-options': [10, 25, 50, 100],
+          'items-per-page-text': 'Itens por página',
+        }"
+        :items-per-page="30"
+      >
+        <template v-slot:body="{ items }">
+          <tbody>
+            <tr
+              :class="
+                email.lido || !email.recebido
+                  ? 'email lido'
+                  : 'email font-weight-bold'
+              "
+              v-for="email in items"
+              :key="email.id"
+            >
+              <td>
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      class="ma-0"
+                      :color="email.favorito ? 'yellow' : ''"
+                      text
+                      icon
+                      v-bind="attrs"
+                      v-on="on"
+                      @click="marcarFavorito(email)"
+                    >
+                      <v-icon>{{
+                        email.favorito ? "mdi-star" : "mdi-star-outline"
+                      }}</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Marcar como favorito</span>
+                </v-tooltip>
 
-    <!-- Tabela desktop -->
-    <v-data-table
-      v-if="!isMobile"
-      height="350px"
-      item-key="id"
-      :loading="carregando || loading"
-      :headers="headers"
-      :items="emails"
-      :search="search"
-      sort-by="data"
-      :sort-desc="true"
-      dense
-      :header-props="{
-        sortByText: 'Ordenar por',
-      }"
-      :footer-props="{
-        'items-per-page-options': [10, 25, 50, 100],
-        'items-per-page-text': 'Itens por página',
-      }"
-      :items-per-page="30"
-    >
-      <template v-slot:body="{ items }">
-        <tbody>
-          <tr
-            :class="
-              email.lido || !email.recebido
-                ? 'email lido'
-                : 'email font-weight-bold'
-            "
-            v-for="email in items"
-            :key="email.id"
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      class="ma-0"
+                      :color="email.importante ? 'red' : ''"
+                      text
+                      icon
+                      v-bind="attrs"
+                      v-on="on"
+                      @click="marcarImportante(email)"
+                    >
+                      <v-icon>{{
+                        email.importante
+                          ? "mdi-bookmark"
+                          : "mdi-bookmark-outline"
+                      }}</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Marcar como importante</span>
+                </v-tooltip>
+              </td>
+
+              <td @click="abrirEmail(email)">
+                <v-avatar class="mr-2" size="30">
+                  <img v-if="!!email.avatar" alt="Avatar" :src="email.avatar" />
+                  <v-icon size="30" v-else :color="blue">mdi-account</v-icon>
+                </v-avatar>
+                <span>{{ email.endereco }}</span>
+              </td>
+              <td @click="abrirEmail(email)">
+                {{ email.assunto }}
+              </td>
+              <td @click="abrirEmail(email)">
+                {{ new Date(email.data * 1000).toLocaleDateString() }}
+              </td>
+              <td>
+                <v-tooltip left>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      :disabled="titulo == 'Lixeira'"
+                      class="ma-0"
+                      text
+                      icon
+                      v-bind="attrs"
+                      v-on="on"
+                      @click="mandarParaLixeira(email)"
+                    >
+                      <v-icon color="blue">mdi-delete-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Mandar para lixeira</span>
+                </v-tooltip>
+
+                <v-tooltip left>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      :disabled="!email.lido"
+                      @click="marcarNaoLido(email)"
+                      class="ma-0"
+                      text
+                      icon
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <v-icon color="blue">mdi-email-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Marcar como não lido</span>
+                </v-tooltip>
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-data-table>
+
+      <v-data-table
+        v-if="isMobile"
+        height="350px"
+        item-key="id"
+        :loading="carregando || loading"
+        :headers="headersMobile"
+        :items="emails"
+        :search="search"
+        sort-by="data"
+        :sort-desc="true"
+        dense
+        hide-default-header
+        :footer-props="{
+          'items-per-page-options': [10, 25, 50, 100],
+          'items-per-page-text': 'Itens por página',
+        }"
+        :items-per-page="30"
+      >
+        <template v-slot:[`item.endereco`]="{ item }">
+          <div
+            :class="!item.lido && item.recebido && 'font-weight-bold'"
+            @click="abrirEmail(item)"
           >
-            <td>
-              <v-tooltip top>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    class="ma-0"
-                    :color="email.favorito ? 'yellow' : ''"
-                    text
-                    icon
-                    v-bind="attrs"
-                    v-on="on"
-                    @click="marcarFavorito(email)"
-                  >
-                    <v-icon>{{
-                      email.favorito ? "mdi-star" : "mdi-star-outline"
-                    }}</v-icon>
-                  </v-btn>
-                </template>
-                <span>Marcar como favorito</span>
-              </v-tooltip>
-
-              <v-tooltip top>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    class="ma-0"
-                    :color="email.importante ? 'red' : ''"
-                    text
-                    icon
-                    v-bind="attrs"
-                    v-on="on"
-                    @click="marcarImportante(email)"
-                  >
-                    <v-icon>{{
-                      email.importante ? "mdi-bookmark" : "mdi-bookmark-outline"
-                    }}</v-icon>
-                  </v-btn>
-                </template>
-                <span>Marcar como importante</span>
-              </v-tooltip>
-            </td>
-
-            <td @click="abrirEmail(email)">
-              <v-avatar class="mr-2" size="30">
-                <img v-if="!!email.avatar" alt="Avatar" :src="email.avatar" />
-                <v-icon size="30" v-else :color="blue">mdi-account</v-icon>
-              </v-avatar>
-              <span>{{ email.endereco }}</span>
-            </td>
-            <td @click="abrirEmail(email)">
-              {{ email.assunto }}
-            </td>
-            <td @click="abrirEmail(email)">
-              {{ new Date(email.data * 1000).toLocaleDateString() }}
-            </td>
-            <td>
-              <v-tooltip left>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    :disabled="titulo == 'Lixeira'"
-                    class="ma-0"
-                    text
-                    icon
-                    v-bind="attrs"
-                    v-on="on"
-                    @click="mandarParaLixeira(email)"
-                  >
-                    <v-icon color="blue">mdi-delete-outline</v-icon>
-                  </v-btn>
-                </template>
-                <span>Mandar para lixeira</span>
-              </v-tooltip>
-
-              <v-tooltip left>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    :disabled="!email.lido"
-                    @click="marcarNaoLido(email)"
-                    class="ma-0"
-                    text
-                    icon
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon color="blue">mdi-email-outline</v-icon>
-                  </v-btn>
-                </template>
-                <span>Marcar como não lido</span>
-              </v-tooltip>
-            </td>
-          </tr>
-        </tbody>
-      </template>
-    </v-data-table>
-
-    <v-data-table
-      v-if="isMobile"
-      height="350px"
-      item-key="id"
-      :loading="carregando || loading"
-      :headers="headersMobile"
-      :items="emails"
-      :search="search"
-      sort-by="data"
-      :sort-desc="true"
-      dense
-      hide-default-header
-      :footer-props="{
-        'items-per-page-options': [10, 25, 50, 100],
-        'items-per-page-text': 'Itens por página',
-      }"
-      :items-per-page="30"
-    >
-      <template v-slot:[`item.endereco`]="{ item }">
-        <div
-          :class="!item.lido && item.recebido && 'font-weight-bold'"
-          @click="abrirEmail(item)"
-        >
-          <v-avatar @click="abrirEmail(item)" size="30" class="mr-3">
-            <img :src="item.avatar" alt="John" />
-          </v-avatar>
-          <span>{{ item.endereco }}</span>
-        </div>
-      </template>
-      <template v-slot:[`item.assunto`]="{ item }">
-        <div
-          :class="!item.lido && item.recebido && 'font-weight-bold'"
-          @click="abrirEmail(item)"
-        >
-          <span>{{ item.assunto }}</span>
-        </div>
-      </template>
-      <template v-slot:[`item.data`]="{ item }">
-        <div
-          :class="!item.lido && item.recebido && 'font-weight-bold'"
-          @click="abrirEmail(item)"
-        >
-          <span>{{ new Date(item.data * 1000).toLocaleString() }}</span>
-        </div>
-      </template>
-    </v-data-table>
-  </v-card>
+            <v-avatar @click="abrirEmail(item)" size="30" class="mr-3">
+              <img :src="item.avatar" alt="John" />
+            </v-avatar>
+            <span>{{ item.endereco }}</span>
+          </div>
+        </template>
+        <template v-slot:[`item.assunto`]="{ item }">
+          <div
+            :class="!item.lido && item.recebido && 'font-weight-bold'"
+            @click="abrirEmail(item)"
+          >
+            <span>{{ item.assunto }}</span>
+          </div>
+        </template>
+        <template v-slot:[`item.data`]="{ item }">
+          <div
+            :class="!item.lido && item.recebido && 'font-weight-bold'"
+            @click="abrirEmail(item)"
+          >
+            <span>{{ new Date(item.data * 1000).toLocaleString() }}</span>
+          </div>
+        </template>
+      </v-data-table>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -213,6 +225,9 @@ export default {
 
   data() {
     return {
+      snackbar: false,
+      textoSnackbar: "",
+      snackbarTimeout: 5000,
       search: "",
       selected: [],
       loading: false,
@@ -272,6 +287,11 @@ export default {
       await emailApi.atualizar(email.id, { favorito: !email.favorito });
       this.loading = false;
       email.favorito = !email.favorito;
+
+      this.textoSnackbar = email.favorito
+        ? "Marcado como favorito"
+        : "Desmarcado como favorito";
+      this.snackbar = true;
     },
 
     async marcarImportante(email) {
@@ -279,6 +299,11 @@ export default {
       await emailApi.atualizar(email.id, { importante: !email.importante });
       this.loading = false;
       email.importante = !email.importante;
+
+      this.textoSnackbar = email.importante
+        ? "Marcado como importante"
+        : "Desmarcado como importante";
+      this.snackbar = true;
     },
 
     async marcarNaoLido(email) {
@@ -286,6 +311,9 @@ export default {
       await emailApi.atualizar(email.id, { lido: !email.lido });
       this.loading = false;
       email.lido = !email.lido;
+
+      this.textoSnackbar = "Marcado como não lido";
+      this.snackbar = true;
     },
 
     async mandarParaLixeira(email) {
@@ -293,6 +321,9 @@ export default {
       await emailApi.atualizar(email.id, { lixeira: true });
       this.loading = false;
       email.lixeira = !email.lixeira;
+
+      this.textoSnackbar = "Enviado para a lixeira";
+      this.snackbar = true;
     },
   },
 };
