@@ -12,8 +12,9 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-card class="ma-2" height="465px">
-      <v-card-actions>
+
+    <v-card class="ma-2 slide" height="465px">
+      <v-card-actions class="fade">
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -110,10 +111,10 @@
       </v-card-actions>
 
       <div v-if="!loading">
-        <v-card-title>
-          {{ email.assunto }}
+        <v-card-title class="fade">
+          <h4>{{ email.assunto }}</h4>
         </v-card-title>
-        <v-card-subtitle>
+        <v-card-subtitle class="fade">
           <v-avatar class="mr-2" size="30">
             <img v-if="!!email.avatar" alt="Avatar" :src="email.avatar" />
             <v-icon size="30" v-else color="blue">mdi-account</v-icon>
@@ -122,7 +123,7 @@
           <br />
           {{ new Date(email.data * 1000).toLocaleString() }}
         </v-card-subtitle>
-        <v-card-text class="corpo-email">
+        <v-card-text class="corpo-email fade">
           {{ email.corpoEmail }}
         </v-card-text>
       </div>
@@ -231,8 +232,33 @@ export default {
 </script>
   
   <style lang="scss" scoped>
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(1%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
 .corpo-email {
   max-height: 280px;
   overflow: auto;
+}
+
+.slide {
+  animation: 1s ease-out 0s 1 slideInFromRight;
+}
+
+.fade {
+  animation: 1s ease-out 0s 1 fadeIn;
 }
 </style>

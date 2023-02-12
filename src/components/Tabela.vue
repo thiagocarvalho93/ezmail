@@ -14,9 +14,9 @@
       </template>
     </v-snackbar>
 
-    <v-card class="ma-2">
+    <v-card class="ma-2 card">
       <v-card-title class="py-2">
-        <span>{{ titulo }}</span>
+        <h4 class="titulo">{{ titulo }}</h4>
 
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
@@ -162,6 +162,7 @@
         </template>
       </v-data-table>
 
+      <!-- tabela mobile -->
       <v-data-table
         v-if="isMobile"
         height="350px"
@@ -185,11 +186,11 @@
             :class="!item.lido && item.recebido && 'font-weight-bold'"
             @click="abrirEmail(item)"
           >
-            <v-avatar class="mr-2" size="30">
+            <v-avatar class="mr-2 email" size="30">
               <img v-if="!!item.avatar" alt="Avatar" :src="item.avatar" />
               <v-icon size="30" v-else color="blue">mdi-account</v-icon>
             </v-avatar>
-            <span>{{ item.endereco }}</span>
+            <span class="email">{{ item.endereco }}</span>
           </div>
         </template>
         <template v-slot:[`item.assunto`]="{ item }">
@@ -197,7 +198,7 @@
             :class="!item.lido && item.recebido && 'font-weight-bold'"
             @click="abrirEmail(item)"
           >
-            <span>{{ item.assunto }}</span>
+            <span class="email">{{ item.assunto }}</span>
           </div>
         </template>
         <template v-slot:[`item.data`]="{ item }">
@@ -205,7 +206,9 @@
             :class="!item.lido && item.recebido && 'font-weight-bold'"
             @click="abrirEmail(item)"
           >
-            <span>{{ new Date(item.data * 1000).toLocaleString() }}</span>
+            <span class="email">{{
+              new Date(item.data * 1000).toLocaleString()
+            }}</span>
           </div>
         </template>
       </v-data-table>
@@ -336,13 +339,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(1%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.card {
+  animation: 1s ease-out 0s 1 slideInFromRight;
+}
+
+.titulo {
+  animation: 1s ease-out 0s 1 fadeIn;
+}
+
 .email {
+  animation: 1s ease-out 0s 1 fadeIn;
+  transition: transform .4s ease;
   cursor: pointer;
 }
 
 .email:hover {
   box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
     rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  transform: scale(1.005);
 }
 
 .lido {

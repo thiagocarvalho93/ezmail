@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <v-card width="330px" elevation="10" class="pa-5">
+    <v-card width="330px" elevation="10" class="pa-5 slide">
       <v-card-title class="d-flex justify-center mb-3">
-        <h3>Login</h3>
+        <h3 class="fade">Login</h3>
       </v-card-title>
       <v-card-text>
-        <v-form ref="form" v-model="valid" lazy-validation>
+        <v-form ref="form" class="fade" v-model="valid" lazy-validation>
           <v-text-field
             outlined
             v-model="email"
@@ -36,7 +36,7 @@
           ></v-checkbox>
         </v-form>
       </v-card-text>
-      <v-card-actions class="d-flex justify-center align-center">
+      <v-card-actions class="d-flex justify-center align-center fade">
         <v-btn
           color="primary"
           class="pa-5 mb-5"
@@ -99,6 +99,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .container {
   background-color: #0093e9;
   background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
@@ -107,5 +125,13 @@ export default {
   justify-content: center;
   height: 100vh;
   width: 100vw;
+}
+
+.slide {
+  animation: 1s ease-out 0s 1 slideInFromRight;
+}
+
+.fade {
+  animation: 1s ease-out 0s 1 fadeIn;
 }
 </style>

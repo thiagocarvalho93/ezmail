@@ -13,11 +13,11 @@
       </template>
     </v-snackbar>
 
-    <v-card class="ma-2" height="465px">
-      <v-card-title class="py-3">
-        <span>Novo email</span>
+    <v-card class="ma-2 slide" height="465px">
+      <v-card-title class="py-3 fade">
+        <h4>Novo email</h4>
       </v-card-title>
-      <v-card-text>
+      <v-card-text class="fade">
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
             v-model="destinatario"
@@ -54,7 +54,7 @@
           ></v-textarea>
         </v-form>
       </v-card-text>
-      <v-card-actions>
+      <v-card-actions class="fade">
         <v-btn dark color="blue" :loading="loading" @click="enviarEmail"
           >Enviar</v-btn
         >
@@ -131,4 +131,29 @@ export default {
 </script>
   
 <style lang="scss" scoped>
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(1%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.slide {
+  animation: 1s ease-out 0s 1 slideInFromRight;
+}
+
+.fade {
+  animation: 1s ease-out 0s 1 fadeIn;
+}
 </style>
