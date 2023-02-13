@@ -52,7 +52,7 @@
         }"
         :footer-props="{
           'items-per-page-options': [10, 25, 50, 100],
-          'items-per-page-text': 'Itens por página',
+          'items-per-page-text': 'Itens',
         }"
         :items-per-page="30"
       >
@@ -177,7 +177,7 @@
         hide-default-header
         :footer-props="{
           'items-per-page-options': [10, 25, 50, 100],
-          'items-per-page-text': 'Itens por página',
+          'items-per-page-text': 'Itens',
         }"
         :items-per-page="30"
       >
