@@ -14,9 +14,9 @@
       </template>
     </v-snackbar>
 
-    <v-card class="ma-2 card">
+    <v-card class="ma-2 slide">
       <v-card-title class="py-2">
-        <h4 class="titulo">{{ titulo }}</h4>
+        <h4 class="fade">{{ titulo }}</h4>
 
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
@@ -61,8 +61,8 @@
             <tr
               :class="
                 email.lido || !email.recebido
-                  ? 'email lido'
-                  : 'email font-weight-bold'
+                  ? 'email fade lido'
+                  : 'email fade font-weight-bold'
               "
               v-for="email in items"
               :key="email.id"
@@ -186,11 +186,11 @@
             :class="!item.lido && item.recebido && 'font-weight-bold'"
             @click="abrirEmail(item)"
           >
-            <v-avatar class="mr-2 email" size="30">
+            <v-avatar class="mr-2 fade" size="30">
               <img v-if="!!item.avatar" alt="Avatar" :src="item.avatar" />
               <v-icon size="30" v-else color="blue">mdi-account</v-icon>
             </v-avatar>
-            <span class="email">{{ item.endereco }}</span>
+            <span class="fade">{{ item.endereco }}</span>
           </div>
         </template>
         <template v-slot:[`item.assunto`]="{ item }">
@@ -198,7 +198,7 @@
             :class="!item.lido && item.recebido && 'font-weight-bold'"
             @click="abrirEmail(item)"
           >
-            <span class="email">{{ item.assunto }}</span>
+            <span class="fade">{{ item.assunto }}</span>
           </div>
         </template>
         <template v-slot:[`item.data`]="{ item }">
@@ -206,7 +206,7 @@
             :class="!item.lido && item.recebido && 'font-weight-bold'"
             @click="abrirEmail(item)"
           >
-            <span class="email">{{
+            <span class="fade">{{
               new Date(item.data * 1000).toLocaleString()
             }}</span>
           </div>
@@ -357,17 +357,16 @@ export default {
   }
 }
 
-.card {
+.slide {
   animation: 1s ease-out 0s 1 slideInFromRight;
 }
 
-.titulo {
+.fade {
   animation: 1s ease-out 0s 1 fadeIn;
 }
 
 .email {
-  animation: 1s ease-out 0s 1 fadeIn;
-  transition: transform .4s ease;
+  transition: transform 0.4s ease;
   cursor: pointer;
 }
 
