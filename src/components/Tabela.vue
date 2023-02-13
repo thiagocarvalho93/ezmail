@@ -34,7 +34,7 @@
           hide-details
         ></v-text-field>
       </v-card-title>
-
+      <v-divider></v-divider>
       <!-- Tabela desktop -->
       <v-data-table
         v-if="!isMobile"

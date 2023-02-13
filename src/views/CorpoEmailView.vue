@@ -14,7 +14,7 @@
     </v-snackbar>
 
     <v-card class="ma-2 slide" height="465px">
-      <v-card-actions class="fade">
+      <v-card-actions class="fade py-0">
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -109,20 +109,23 @@
 
         <v-divider vertical class="mx-2"></v-divider>
       </v-card-actions>
+      <v-divider></v-divider>
 
       <div v-if="!loading">
-        <v-card-title class="fade">
+        <v-card-title class="fade mb-3">
           <h4>{{ email.assunto }}</h4>
         </v-card-title>
         <v-card-subtitle class="fade">
-          <v-avatar class="mr-2" size="30">
-            <img v-if="!!email.avatar" alt="Avatar" :src="email.avatar" />
-            <v-icon size="30" v-else color="blue">mdi-account</v-icon>
-          </v-avatar>
-          {{ email.endereco }}
-          <br />
-          {{ new Date(email.data * 1000).toLocaleString() }}
+          <v-chip class="slide mb-3">
+            <v-avatar size="30" class="mr-3">
+              <img v-if="!!email.avatar" alt="Avatar" :src="email.avatar" />
+              <v-icon size="30" v-else color="blue">mdi-account</v-icon>
+            </v-avatar>
+            <h4>{{ email.endereco }}</h4>
+          </v-chip>
+          <h4>{{ new Date(email.data * 1000).toLocaleString() }}</h4>
         </v-card-subtitle>
+        <v-divider></v-divider>
         <v-card-text class="corpo-email fade">
           {{ email.corpoEmail }}
         </v-card-text>

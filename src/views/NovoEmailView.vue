@@ -17,6 +17,7 @@
       <v-card-title class="py-3 fade">
         <h4>Novo email</h4>
       </v-card-title>
+      <v-divider></v-divider>
       <v-card-text class="fade">
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
@@ -54,6 +55,7 @@
           ></v-textarea>
         </v-form>
       </v-card-text>
+      <v-divider></v-divider>
       <v-card-actions class="fade">
         <v-btn dark color="blue" :loading="loading" @click="enviarEmail"
           >Enviar</v-btn
