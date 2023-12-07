@@ -1,10 +1,6 @@
 <template>
   <div>
-    <v-snackbar
-      transition="scale-transition"
-      v-model="snackbar"
-      :timeout="snackbarTimeout"
-    >
+    <v-snackbar transition="scale-transition" v-model="snackbar" :timeout="snackbarTimeout">
       {{ textoSnackbar }}
       <template v-slot:action="{ attrs }">
         <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
@@ -13,43 +9,27 @@
       </template>
     </v-snackbar>
 
-    <v-card class="ma-2 slide" height="465px">
+    <v-card class="ma-2" height="465px">
       <v-card-actions class="fade py-0">
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              class="ma-0"
-              text
-              icon
-              @click="voltar()"
-              v-bind="attrs"
-              v-on="on"
-            >
+            <v-btn class="ma-0" text icon @click="voltar()" v-bind="attrs" v-on="on">
               <v-icon color="blue">mdi-arrow-left</v-icon>
             </v-btn>
           </template>
-          <span
-            >Voltar para
-            {{
-              rotas.find((rota) => rota.path == "/" + $route.params.caixa).title
-            }}</span
-          >
+          <span>
+            Voltar para
+            {{ rotas.find((rota) => rota.path == "/" + $route.params.caixa).title }}
+          </span>
         </v-tooltip>
         <v-divider vertical class="mx-2"></v-divider>
 
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              class="ma-0"
-              text
-              icon
-              v-bind="attrs"
-              v-on="on"
-              @click="marcarFavorito"
-            >
-              <v-icon :color="email.favorito ? 'yellow' : 'blue'">{{
-                email.favorito ? "mdi-star" : "mdi-star-outline"
-              }}</v-icon>
+            <v-btn class="ma-0" text icon v-bind="attrs" v-on="on" @click="marcarFavorito">
+              <v-icon :color="email.favorito ? 'yellow' : 'blue'">
+                {{ email.favorito ? "mdi-star" : "mdi-star-outline" }}
+              </v-icon>
             </v-btn>
           </template>
           <span>Marcar como favorito</span>
@@ -57,17 +37,10 @@
 
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              class="ma-0"
-              text
-              icon
-              v-bind="attrs"
-              v-on="on"
-              @click="marcarImportante"
-            >
-              <v-icon :color="email.importante ? 'red' : 'blue'">{{
-                email.importante ? "mdi-bookmark" : "mdi-bookmark-outline"
-              }}</v-icon>
+            <v-btn class="ma-0" text icon v-bind="attrs" v-on="on" @click="marcarImportante">
+              <v-icon :color="email.importante ? 'red' : 'blue'">
+                {{ email.importante ? "mdi-bookmark" : "mdi-bookmark-outline" }}
+              </v-icon>
             </v-btn>
           </template>
           <span>Marcar como importante</span>
@@ -75,15 +48,7 @@
 
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              class="ma-0"
-              text
-              icon
-              v-bind="attrs"
-              v-on="on"
-              :disabled="email.lixeira"
-              @click="mandarParaLixeira"
-            >
+            <v-btn class="ma-0" text icon v-bind="attrs" v-on="on" :disabled="email.lixeira" @click="mandarParaLixeira">
               <v-icon color="blue">mdi-delete-outline</v-icon>
             </v-btn>
           </template>
@@ -92,15 +57,7 @@
 
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              class="ma-0"
-              text
-              icon
-              v-bind="attrs"
-              v-on="on"
-              :disabled="!email.lido"
-              @click="marcarNaoLido"
-            >
+            <v-btn class="ma-0" text icon v-bind="attrs" v-on="on" :disabled="!email.lido" @click="marcarNaoLido">
               <v-icon color="blue">mdi-email-outline</v-icon>
             </v-btn>
           </template>
@@ -138,7 +95,7 @@
   </div>
 </template>
   
-  <script>
+<script>
 import Email from "@/models/Email";
 import emailApi from "@/api/email/email-api";
 import rotas from "@/router/routes";
@@ -234,11 +191,12 @@ export default {
 };
 </script>
   
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
 @keyframes fadeIn {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -248,10 +206,12 @@ export default {
   0% {
     transform: translateX(1%);
   }
+
   100% {
     transform: translateX(0);
   }
 }
+
 .corpo-email {
   max-height: 280px;
   overflow: auto;

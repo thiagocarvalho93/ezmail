@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <v-card width="330px" elevation="10" class="pa-5 slide">
+    <v-card width="330px" elevation="10" class="pa-5">
       <v-card-title class="d-flex justify-center mb-3">
-        <h3 class="fade">Login</h3>
+        <h2 class="fade">Login</h2>
       </v-card-title>
       <v-card-text>
         <v-form ref="form" class="fade" v-model="valid" lazy-validation>

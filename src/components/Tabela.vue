@@ -14,9 +14,9 @@
       </template>
     </v-snackbar>
 
-    <v-card class="ma-2 slide">
+    <v-card class="ma-2">
       <v-card-title class="py-2">
-        <h4 class="fade">{{ titulo }}</h4>
+        <h4>{{ titulo }}</h4>
 
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
@@ -362,18 +362,12 @@ export default {
 }
 
 .fade {
-  animation: 1s ease-out 0s 1 fadeIn;
+  animation: 0.5s ease-out 0s 1 fadeIn;
 }
 
 .email {
   transition: transform 0.4s ease;
   cursor: pointer;
-}
-
-.email:hover {
-  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
-    rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
-  transform: scale(1.005);
 }
 
 .lido {

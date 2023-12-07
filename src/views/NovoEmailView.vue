@@ -13,8 +13,8 @@
       </template>
     </v-snackbar>
 
-    <v-card class="ma-2 slide" height="465px">
-      <v-card-title class="py-3 fade">
+    <v-card class="ma-2" height="465px">
+      <v-card-title class="py-3">
         <h4>Novo email</h4>
       </v-card-title>
       <v-divider></v-divider>
