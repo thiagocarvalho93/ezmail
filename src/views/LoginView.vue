@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <v-card width="330px" elevation="10" class="pa-5">
+    <v-card width="330px" elevation="10" class="pa-6">
       <v-card-title class="d-flex justify-center mb-3">
         <h2 class="fade">Login</h2>
       </v-card-title>
@@ -31,19 +31,20 @@
             v-model="rememberPassword"
             class="pa-0 ma-0 mb-2"
             label="Lembrar-me"
-            color="primary"
+            color="indigo"
             hide-details
           ></v-checkbox>
         </v-form>
       </v-card-text>
       <v-card-actions class="d-flex justify-center align-center fade">
         <v-btn
-          color="primary"
+          color="indigo"
           class="pa-5 mb-5"
           width="100%"
           :loading="loading"
           :disabled="!valid"
           @click="login"
+          dark
         >
           Entrar
         </v-btn>
@@ -118,8 +119,7 @@ export default {
 }
 
 .container {
-  background-color: #0093e9;
-  background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
+  background-color: #1A237E;
   display: flex;
   align-items: center;
   justify-content: center;

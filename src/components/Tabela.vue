@@ -8,7 +8,7 @@
     >
       {{ textoSnackbar }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+        <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
           Fechar
         </v-btn>
       </template>
@@ -112,7 +112,7 @@
               <td @click="abrirEmail(email)">
                 <v-avatar class="mr-2" size="30">
                   <img v-if="!!email.avatar" alt="Avatar" :src="email.avatar" />
-                  <v-icon size="30" v-else color="blue">mdi-account</v-icon>
+                  <v-icon size="30" v-else color="indigo">mdi-account</v-icon>
                 </v-avatar>
                 <span>{{ email.endereco }}</span>
               </td>
@@ -134,7 +134,7 @@
                       v-on="on"
                       @click="mandarParaLixeira(email)"
                     >
-                      <v-icon color="blue">mdi-delete-outline</v-icon>
+                      <v-icon color="indigo">mdi-delete-outline</v-icon>
                     </v-btn>
                   </template>
                   <span>Mandar para lixeira</span>
@@ -151,7 +151,7 @@
                       v-bind="attrs"
                       v-on="on"
                     >
-                      <v-icon color="blue">mdi-email-outline</v-icon>
+                      <v-icon color="indigo">mdi-email-outline</v-icon>
                     </v-btn>
                   </template>
                   <span>Marcar como não lido</span>
@@ -188,7 +188,7 @@
           >
             <v-avatar class="mr-2 fade" size="30">
               <img v-if="!!item.avatar" alt="Avatar" :src="item.avatar" />
-              <v-icon size="30" v-else color="blue">mdi-account</v-icon>
+              <v-icon size="30" v-else color="indigo">mdi-account</v-icon>
             </v-avatar>
             <span class="fade">{{ item.endereco }}</span>
           </div>

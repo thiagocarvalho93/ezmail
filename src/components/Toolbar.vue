@@ -9,7 +9,7 @@
       v-model="drawer"
       :mini-variant.sync="mini"
       expand-on-hover
-      color="blue"
+      color="indigo"
       v-if="!isMobile"
       nav
       dark
@@ -35,7 +35,7 @@
       clipped
       width="200"
       v-model="drawer"
-      color="blue"
+      color="indigo"
       v-if="isMobile"
       nav
       dark
@@ -55,7 +55,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="blue" dark app clipped-left outlined>
+    <v-app-bar color="indigo" dark app clipped-left outlined>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 

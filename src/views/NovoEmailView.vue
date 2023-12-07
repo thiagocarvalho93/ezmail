@@ -7,7 +7,7 @@
     >
       {{ textoSnackbar }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+        <v-btn color="indigo" text v-bind="attrs" @click="snackbar = false">
           Fechar
         </v-btn>
       </template>
@@ -57,9 +57,9 @@
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions class="fade">
-        <v-btn dark color="blue" :loading="loading" @click="enviarEmail"
-          >Enviar</v-btn
-        >
+        <v-btn dark color="indigo" :loading="loading" @click="enviarEmail">
+          Enviar
+        </v-btn>
       </v-card-actions>
     </v-card>
   </div>

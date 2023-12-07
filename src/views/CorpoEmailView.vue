@@ -3,7 +3,7 @@
     <v-snackbar transition="scale-transition" v-model="snackbar" :timeout="snackbarTimeout">
       {{ textoSnackbar }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+        <v-btn color="indigo" text v-bind="attrs" @click="snackbar = false">
           Fechar
         </v-btn>
       </template>
@@ -14,7 +14,7 @@
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
             <v-btn class="ma-0" text icon @click="voltar()" v-bind="attrs" v-on="on">
-              <v-icon color="blue">mdi-arrow-left</v-icon>
+              <v-icon color="indigo">mdi-arrow-left</v-icon>
             </v-btn>
           </template>
           <span>
@@ -27,7 +27,7 @@
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
             <v-btn class="ma-0" text icon v-bind="attrs" v-on="on" @click="marcarFavorito">
-              <v-icon :color="email.favorito ? 'yellow' : 'blue'">
+              <v-icon :color="email.favorito ? 'yellow' : 'indigo'">
                 {{ email.favorito ? "mdi-star" : "mdi-star-outline" }}
               </v-icon>
             </v-btn>
@@ -38,7 +38,7 @@
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
             <v-btn class="ma-0" text icon v-bind="attrs" v-on="on" @click="marcarImportante">
-              <v-icon :color="email.importante ? 'red' : 'blue'">
+              <v-icon :color="email.importante ? 'red' : 'indigo'">
                 {{ email.importante ? "mdi-bookmark" : "mdi-bookmark-outline" }}
               </v-icon>
             </v-btn>
@@ -49,7 +49,7 @@
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
             <v-btn class="ma-0" text icon v-bind="attrs" v-on="on" :disabled="email.lixeira" @click="mandarParaLixeira">
-              <v-icon color="blue">mdi-delete-outline</v-icon>
+              <v-icon color="indigo">mdi-delete-outline</v-icon>
             </v-btn>
           </template>
           <span>Mandar para lixeira</span>
@@ -58,7 +58,7 @@
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
             <v-btn class="ma-0" text icon v-bind="attrs" v-on="on" :disabled="!email.lido" @click="marcarNaoLido">
-              <v-icon color="blue">mdi-email-outline</v-icon>
+              <v-icon color="indigo">mdi-email-outline</v-icon>
             </v-btn>
           </template>
           <span>Marcar como não lido</span>
@@ -76,7 +76,7 @@
           <v-chip class="slide mb-3">
             <v-avatar size="30" class="mr-3">
               <img v-if="!!email.avatar" alt="Avatar" :src="email.avatar" />
-              <v-icon size="30" v-else color="blue">mdi-account</v-icon>
+              <v-icon size="30" v-else color="indigo">mdi-account</v-icon>
             </v-avatar>
             <h4>{{ email.endereco }}</h4>
           </v-chip>
